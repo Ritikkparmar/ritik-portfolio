@@ -1,38 +1,63 @@
-import Netowrked from "../../public/assets/projects/networked.png";
-import scrapyT from "../../public/assets/projects/scrapyT.png";
-import basilWholesale from "../../public/assets/projects/basilMerchant.png";
-import basilMissionControl from "../../public/assets/projects/basilMissionControl.png";
-import basilOnlineOrder from "../../public/assets/projects/basilOnlineOrder.png";
+import sensAI from "../../public/assets/projects/Aiapp.png";
+import portviewAI from "../../public/assets/projects/portview.png";
+import jobhive from "../../public/assets/projects/job.png";
+import bloodDonate from "../../public/assets/projects/blood.png";
+import trimmr from "../../public/assets/projects/url.png";
+import devThreads from "../../public/assets/projects/portview.png";
 
 export const projectData = [
   {
-    image: Netowrked,
-    title: "Networked AI",
+    image: "/assets/projects/Aiapp.png",
+    title: "Sens AI",
     description:
-      "Discover the future of networking with Networked AI - Your central hub for local connections and extraordinary events.",
+      "An AI-powered career coach that helps users find the best path with resume insights, job suggestions, and personalized growth plans.",
+    githubLink: "https://github.com/yourusername/sens-ai",
+    liveLink: "https://sens-ai.com",
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "OpenAI API"],
   },
   {
-    image: scrapyT,
-    title: "ScrapyT",
+    image: "/assets/projects/portview.png",
+    title: "Portview AI",
     description:
-      "Designing and Developing Robust and Stylish Web Applications for a Decade and Counting",
+      "Generate stunning portfolios from simple prompts, complete with integrated interview bots and smart layout suggestions.",
+    githubLink: "https://github.com/yourusername/portview-ai",
+    liveLink: "coming-soon",
+    techStack: ["React", "Node.js", "MongoDB", "Express"],
   },
   {
-    image: basilWholesale,
-    title: "Wholesale Payment",
+    image: "/assets/projects/job.png",
+    title: "JobHive",
     description:
-      "Designing and Developing Robust and Stylish Web Applications for a Decade and Counting",
+      "A sleek job portal where users can post, edit, and manage job listings with modern CRUD operations and applicant tracking.",
+    githubLink: "https://github.com/yourusername/jobhive",
+    liveLink: "coming-soon",
+    techStack: ["MERN Stack", "Redux", "Material UI"],
   },
   {
-    image: basilMissionControl,
-    title: "Mission Control",
+    image: "/assets/projects/blood.png",
+    title: "Blood Donate App",
     description:
-      "Designing and Developing Robust and Stylish Web Applications for a Decade and Counting",
+      "A lifesaving platform connecting donors and recipients through geolocation, urgency filters, and real-time availability.",
+    githubLink: "https://github.com/yourusername/blood-donate",
+    liveLink: "coming-soon",
+    techStack: ["React Native", "Firebase", "Google Maps API"],
   },
   {
-    image: basilOnlineOrder,
-    title: "Online Ordering",
+    image: "/assets/projects/url.png",
+    title: "Trimmr",
     description:
-      "Designing and Developing Robust and Stylish Web Applications for a Decade and Counting",
+      "Minimalist and fast URL shortener with analytics, QR code generation, and custom aliases for effective link management.",
+    githubLink: "https://github.com/yourusername/trimmr",
+    liveLink: "coming-soon",
+    techStack: ["Node.js", "Express", "MongoDB", "Redis"],
+  },
+  {
+    image: "/assets/projects/portview.png",
+    title: "DevThreads",
+    description:
+      "A modern blogging app for developers—share knowledge, discuss trends, and build a following in the dev community.",
+    githubLink: "https://github.com/yourusername/devthreads",
+    liveLink: "coming-soon",
+    techStack: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
   },
 ];

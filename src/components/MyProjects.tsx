@@ -3,38 +3,152 @@
 import { projectData } from "@/data/projectData";
 import Image from "next/image";
 import React from "react";
+import { motion } from "framer-motion";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiReact, SiNodedotjs, SiMongodb, SiExpress, SiRedux, SiFirebase, SiGooglemaps, SiRedis, SiPrisma, SiPostgresql, SiMaterialdesign } from "react-icons/si";
 
 const MyProjects = () => {
+  const getTechIcon = (tech: string) => {
+    switch (tech.toLowerCase()) {
+      case "next.js":
+        return <SiNextdotjs className="text-gray-800" />;
+      case "typescript":
+        return <SiTypescript className="text-blue-600" />;
+      case "tailwind css":
+        return <SiTailwindcss className="text-cyan-500" />;
+      case "react":
+        return <SiReact className="text-blue-500" />;
+      case "node.js":
+        return <SiNodedotjs className="text-green-600" />;
+      case "mongodb":
+        return <SiMongodb className="text-green-500" />;
+      case "express":
+        return <SiExpress className="text-gray-800" />;
+      case "redux":
+        return <SiRedux className="text-purple-600" />;
+      case "material ui":
+        return <SiMaterialdesign className="text-blue-500" />;
+      case "firebase":
+        return <SiFirebase className="text-yellow-500" />;
+      case "google maps api":
+        return <SiGooglemaps className="text-red-500" />;
+      case "redis":
+        return <SiRedis className="text-red-600" />;
+      case "prisma":
+        return <SiPrisma className="text-blue-800" />;
+      case "postgresql":
+        return <SiPostgresql className="text-blue-700" />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <section className="pb-32">
-      {projectData.map((item, index) => (
-        <div
-          key={index}
-          className="relative h-[50vh] lg:h-[100vh] md:h-[90vh] sm:h-[70vh] bg-white"
-        >
-          <div
-            className={`h-[0vh] ${
-              index === projectData.length - 1 ? "relative" : "sticky top-[80px]"
-            }`}
+    <section className="pb-32 px-4 md:px-10 lg:px-20 bg-gradient-to-br from-gray-50 via-purple-50 to-white">
+      <motion.h2 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16"
+      >
+        Featured <span className="text-purple-600">Projects</span>
+      </motion.h2>
+
+      <div className="space-y-32">
+        {projectData.map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true }}
+            className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-10 lg:gap-20`}
           >
-            <div className="w-[100%] bg-[#b8b8b8] h-[30vh] rounded-xl lg:h-[70vh] md:h-[50vh] sm:h-[40vh] relative">
+            <motion.div 
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="w-full lg:w-1/2 h-[300px] sm:h-[400px] relative rounded-xl overflow-hidden shadow-xl group"
+            >
               <Image
                 src={item.image}
-                alt="project-image"
-                className="w-[100%] h-[100%] object-contain "
-                loading="lazy"
+                alt={item.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-contain rounded-xl group-hover:scale-105 transition-transform duration-500"
+                priority={index === 0}
+                style={{
+                  objectFit: "contain",
+                  backgroundColor: "#f8f9fa",
+                  padding: "1rem"
+                }}
               />
-            </div>
-            <h1 className="mt-5 text-4xl lg:text-6xl font-bold text-gray-800">
-              {item.title}
-              <span className="text-purple-600">.</span>
-            </h1>
-            <p className="mt-5 text-gray-800 text-xl lg:text-2xl px-2">
-              {item.description}
-            </p>
-          </div>
-        </div>
-      ))}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="w-full lg:w-1/2 text-center lg:text-left"
+            >
+              <h3 className="text-3xl md:text-4xl font-bold text-gray-800">
+                {item.title}
+                <span className="text-purple-600">.</span>
+              </h3>
+              <p className="mt-4 text-lg md:text-xl text-gray-600 leading-relaxed">
+                {item.description}
+              </p>
+              
+              <div className="mt-6 flex flex-wrap gap-2 justify-center lg:justify-start">
+                {item.techStack.map((tech, techIndex) => (
+                  <motion.div
+                    key={techIndex}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: 0.3 + techIndex * 0.1 }}
+                    viewport={{ once: true }}
+                    className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                    title={tech}
+                  >
+                    {getTechIcon(tech)}
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-8 flex gap-4 justify-center lg:justify-start">
+                <motion.a
+                  href={item.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                >
+                  <FaGithub />
+                  <span>GitHub</span>
+                </motion.a>
+                <motion.a
+                  href={item.liveLink === "coming-soon" ? "#" : item.liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                    item.liveLink === "coming-soon"
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-purple-600 text-white hover:bg-purple-700"
+                  }`}
+                >
+                  <FaExternalLinkAlt />
+                  <span>{item.liveLink === "coming-soon" ? "Coming Soon" : "Live Preview"}</span>
+                </motion.a>
+              </div>
+            </motion.div>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 };

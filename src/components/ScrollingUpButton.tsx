@@ -2,10 +2,12 @@
 import Image from "next/image";
 import upArrowIcon from "../../public/icon/upArrow.svg";
 import React, { useEffect, useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 const ScrollButtons = () => {
   const [showScrollUp, setShowScrollUp] = useState(false);
   const [showScrollDown, setShowScrollDown] = useState(true);
+  const { darkMode } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +45,9 @@ const ScrollButtons = () => {
         }`}
         onClick={scrollToTop}
       >
-        <div className="bg-purple-600 w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer group transition-all duration-300">
+        <div className={`w-[40px] h-[40px] rounded-full flex justify-center items-center cursor-pointer group transition-all duration-300 ${
+          darkMode ? "bg-purple-700" : "bg-purple-600"
+        }`}>
           <Image
             alt="upArrow"
             src={upArrowIcon}
@@ -61,11 +65,17 @@ const ScrollButtons = () => {
       >
         <div className="flex flex-col items-center cursor-pointer">
           {/* Animated Scroll Container */}
-          <div className="w-10 h-16 rounded-full border-2 border-purple-600 flex justify-center items-end p-1 relative overflow-hidden animate-pulse">
-            <div className="w-5 h-5 bg-purple-600 rounded-full animate-bounce"></div>
+          <div className={`w-10 h-16 rounded-full border-2 flex justify-center items-end p-1 relative overflow-hidden animate-pulse ${
+            darkMode ? "border-purple-500" : "border-purple-600"
+          }`}>
+            <div className={`w-5 h-5 rounded-full animate-bounce ${
+              darkMode ? "bg-purple-500" : "bg-purple-600"
+            }`}></div>
           </div>
           {/* Scroll Text */}
-          <p className="text-purple-600 mt-2 text-sm md:text-base animate-pulse">
+          <p className={`mt-2 text-sm md:text-base animate-pulse ${
+            darkMode ? "text-purple-500" : "text-purple-600"
+          }`}>
             Scroll down
           </p>
         </div>
