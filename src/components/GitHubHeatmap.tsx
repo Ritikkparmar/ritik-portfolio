@@ -1,107 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTheme } from "@/context/ThemeContext";
-import { FaGithub } from "react-icons/fa";
-
-interface ContributionDay {
-  contributionCount: number;
-  date: string;
-}
-
-interface Week {
-  contributionDays: ContributionDay[];
-}
-
-interface ContributionsData {
-  weeks?: Week[];
-  totalContributions?: number;
-}
+import { FaGithub, FaCode, FaStar } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const GITHUB_USERNAME = "Ritikkparmar";
 
 export default function GitHubHeatmap() {
   const { darkMode } = useTheme();
-  const [contributions, setContributions] = useState<ContributionsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchContributions = async () => {
-      try {
-        const response = await fetch('https://github-contributions-api.jogruber.de/v4/Ritikkparmar');
-        if (!response.ok) {
-          throw new Error('Failed to fetch contributions');
-        }
-        const data = await response.json();
-        // Validate data structure before setting state
-        if (!data || !Array.isArray(data.weeks)) {
-          throw new Error('Invalid data format from GitHub API');
-        }
-        setContributions(data);
-        setLoading(false);
-      } catch (err) {
-        console.error('GitHub API Error:', err);
-        setError('Failed to load GitHub contributions');
-        setLoading(false);
-      }
-    };
-
-    fetchContributions();
-  }, []);
-
-  const getContributionColor = (count: number): string => {
-    if (count === 0) return darkMode ? 'bg-gray-800' : 'bg-gray-100';
-    if (count <= 3) return 'bg-green-200 dark:bg-green-900';
-    if (count <= 6) return 'bg-green-300 dark:bg-green-700';
-    if (count <= 9) return 'bg-green-400 dark:bg-green-600';
-    return 'bg-green-500 dark:bg-green-500';
-  };
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-48">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
-      </div>
-    );
-  }
-
-  if (error || !contributions || !contributions.weeks || !Array.isArray(contributions.weeks)) {
-    return (
-      <div className="text-red-500 text-center p-8">
-        <p>Could not load GitHub contributions. Please try again later.</p>
-        <p className="mt-2 text-sm text-gray-500">{error}</p>
-      </div>
-    );
-  }
-
-  // Create a safe array for rendering
-  const weekArr = [];
-  
-  try {
-    if (contributions.weeks && Array.isArray(contributions.weeks)) {
-      for (const week of contributions.weeks) {
-        if (week && Array.isArray(week.contributionDays)) {
-          weekArr.push(week.contributionDays);
-        }
-      }
-    }
-  } catch (err) {
-    console.error('Error processing contributions data:', err);
-  }
-
-  // If weekArr is empty after processing, show an error
-  if (weekArr.length === 0) {
-    return (
-      <div className="text-red-500 text-center p-8">
-        <p>No contribution data available.</p>
-      </div>
-    );
-  }
 
   return (
-    <section className="w-full max-w-4xl mx-auto pb-0 mb-0">
-      <h1
+    <section className="w-full max-w-4xl mx-auto pb-8 mb-0">
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
         className="text-5xl lg:text-6xl font-bold text-left mb-2"
         style={{
           background: darkMode
@@ -113,60 +28,116 @@ export default function GitHubHeatmap() {
         }}
       >
         GitHub Activity<span className="text-purple-600">.</span>
-      </h1>
-      <p className={`mt-6 text-lg lg:text-2xl px-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
+      </motion.h1>
+      
+      <motion.p 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        viewport={{ once: true }}
+        className={`mt-6 text-lg lg:text-2xl px-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
       >
         <span className="font-semibold text-purple-500">Open Source Journey:</span> <br className="hidden md:block" />
-        Here&apos;s a creative snapshot of my coding streaks, contributions, and open source passion over the past year.
-      </p>
-      <div
+        Here&apos;s a snapshot of my coding activities and open source passion.
+      </motion.p>
+      
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        viewport={{ once: true }}
         className={`mt-10 p-6 rounded-2xl shadow-xl transition-all duration-300 ${darkMode ? 'bg-gray-900 border border-gray-800' : 'bg-white border border-gray-200'}`}
         style={{ boxShadow: darkMode ? '0 4px 32px 0 #2d1a4a33' : '0 4px 32px 0 #a78bfa33' }}
       >
-        <div className="flex flex-col items-start">
-          <div className="w-full overflow-x-auto hide-scrollbar">
-            <div className="grid grid-cols-53 gap-1">
-              {weekArr.map((week, weekIndex) => (
-                <div key={weekIndex} className="grid grid-rows-7 gap-1">
-                  {week.map((day, dayIndex) => (
-                    <div
-                      key={`${weekIndex}-${dayIndex}`}
-                      className={`w-3 h-3 rounded-sm ${getContributionColor(day.contributionCount)}`}
-                      title={`${day.date}: ${day.contributionCount} contributions`}
-                    />
-                  ))}
-                </div>
-              ))}
+        <div className="flex flex-col md:flex-row gap-8 items-center">
+          {/* GitHub Stats Card */}
+          <div className={`flex-1 p-6 rounded-xl ${darkMode ? 'bg-gray-800' : 'bg-gray-50'} shadow-lg`}>
+            <div className="flex items-center mb-4">
+              <FaGithub className={`text-2xl mr-3 ${darkMode ? 'text-purple-400' : 'text-purple-600'}`} />
+              <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>GitHub Profile</h3>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <span className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <FaCode className="inline mr-2" /> Repositories
+                </span>
+                <span className={`font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  15+
+                </span>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <span className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <FaStar className="inline mr-2" /> Top Languages
+                </span>
+                <span className={`font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  TypeScript, JavaScript, React
+                </span>
+              </div>
+              
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href={`https://github.com/${GITHUB_USERNAME}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center justify-center gap-2 px-5 py-3 w-full rounded-lg shadow mt-4 transition-all duration-300 ${
+                  darkMode 
+                    ? 'bg-gradient-to-r from-purple-700 to-blue-600 text-white hover:from-purple-600 hover:to-blue-500' 
+                    : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600'
+                }`}
+              >
+                <FaGithub />
+                <span>View My GitHub Profile</span>
+              </motion.a>
             </div>
           </div>
           
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
-            <span className={`text-lg md:text-xl font-bold ${darkMode ? 'text-purple-400' : 'text-purple-600'} animate-pulse`}>
-              {contributions.totalContributions?.toLocaleString() || 0} contributions in the last year
-            </span>
-            <a
-              href={`https://github.com/${GITHUB_USERNAME}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-5 py-2 rounded-lg shadow transition-all duration-300 ${
-                darkMode 
-                  ? 'bg-gradient-to-r from-purple-700 to-blue-600 text-white hover:from-purple-600 hover:to-blue-500' 
-                  : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600'
-              }`}
-            >
-              <FaGithub />
-              <span>Check out my GitHub</span>
-            </a>
+          {/* Contribution Highlights */}
+          <div className="flex-1">
+            <h3 className={`text-xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+              Contribution Highlights
+            </h3>
+            
+            <div className="space-y-3">
+              {[
+                "Created responsive web applications with Next.js",
+                "Implemented modern UI with TailwindCSS and Framer Motion",
+                "Built secure and scalable backend systems",
+                "Collaborated on open source projects",
+                "Optimized applications for performance"
+              ].map((highlight, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 * index }}
+                  viewport={{ once: true }}
+                  className={`flex items-start p-3 rounded-lg ${
+                    darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'
+                  } transition-colors duration-300`}
+                >
+                  <div className={`w-3 h-3 mt-1.5 mr-3 rounded-full ${getRandomColorClass()}`}></div>
+                  <span className={`${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>{highlight}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <style>{`
-        @keyframes fadeIn {
-          to { opacity: 1; }
-        }
-        .hide-scrollbar::-webkit-scrollbar { display: none !important; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
+      </motion.div>
     </section>
   );
+}
+
+// Helper function to get random color classes for the dots
+function getRandomColorClass() {
+  const colors = [
+    'bg-green-400',
+    'bg-blue-400',
+    'bg-purple-400',
+    'bg-pink-400',
+    'bg-indigo-400'
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
 } 
