@@ -78,6 +78,12 @@ export default function GitHubHeatmap() {
 
   if (!contributions) return null;
 
+  const weekArr = [];
+  
+  for (const week of contributions.weeks) {
+    weekArr.push(week.contributionDays);
+  }
+
   return (
     <section className="w-full max-w-4xl mx-auto pb-0 mb-0">
       <h1
@@ -105,9 +111,9 @@ export default function GitHubHeatmap() {
         <div className="flex flex-col items-start">
           <div className="w-full overflow-x-auto hide-scrollbar">
             <div className="grid grid-cols-53 gap-1">
-              {contributions.weeks.map((week, weekIndex) => (
+              {weekArr.map((week, weekIndex) => (
                 <div key={weekIndex} className="grid grid-rows-7 gap-1">
-                  {week.contributionDays.map((day, dayIndex) => (
+                  {week.map((day, dayIndex) => (
                     <div
                       key={`${weekIndex}-${dayIndex}`}
                       className={`w-3 h-3 rounded-sm ${getContributionColor(day.contributionCount)}`}

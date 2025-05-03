@@ -55,7 +55,7 @@ const ContactForm = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        Let's Work Together
+        Let&apos;s Work Together
       </motion.h2>
 
       <motion.div

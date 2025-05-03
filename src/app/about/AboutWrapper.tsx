@@ -18,7 +18,7 @@ const AboutWrapper = () => {
         </h1>
         <p className={`mt-8 text-xl lg:text-2xl px-2 border-l-4 lg:border-l-8 border-purple-600 ${darkMode ? 'text-gray-300' : 'text-gray-800'}`}>
           Developing beautiful and functional websites is what I love doing, and
-          that's why I give my all in every new challenge.
+          that&apos;s why I give my all in every new challenge.
         </p>
       </section>
       <div className="pb-20">

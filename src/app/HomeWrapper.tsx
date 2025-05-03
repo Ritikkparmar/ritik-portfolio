@@ -7,9 +7,10 @@ import Link from "next/link";
 import Experience from "@/components/Experience";
 import Skils from "@/components/Skils";
 import MyStory from "@/components/MyStory";
+import { StaticImageData } from "next/image";
 
 interface HomeWrapperProps {
-  profileImg: any;
+  profileImg: StaticImageData | string;
 }
 
 const HomeWrapper = ({ profileImg }: HomeWrapperProps) => {

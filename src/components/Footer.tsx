@@ -1,6 +1,5 @@
 "use client";
 
-import { Github, Linkedin } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
 const Footer = () => {
