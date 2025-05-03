@@ -14,8 +14,8 @@ interface Week {
 }
 
 interface ContributionsData {
-  weeks: Week[];
-  totalContributions: number;
+  weeks?: Week[];
+  totalContributions?: number;
 }
 
 const GITHUB_USERNAME = "Ritikkparmar";
@@ -34,9 +34,14 @@ export default function GitHubHeatmap() {
           throw new Error('Failed to fetch contributions');
         }
         const data = await response.json();
+        // Validate data structure before setting state
+        if (!data || !Array.isArray(data.weeks)) {
+          throw new Error('Invalid data format from GitHub API');
+        }
         setContributions(data);
         setLoading(false);
       } catch (err) {
+        console.error('GitHub API Error:', err);
         setError('Failed to load GitHub contributions');
         setLoading(false);
       }
@@ -61,20 +66,37 @@ export default function GitHubHeatmap() {
     );
   }
 
-  if (error) {
+  if (error || !contributions || !contributions.weeks || !Array.isArray(contributions.weeks)) {
     return (
-      <div className="text-red-500 text-center">
-        Could not load GitHub contributions. Please try again later.
+      <div className="text-red-500 text-center p-8">
+        <p>Could not load GitHub contributions. Please try again later.</p>
+        <p className="mt-2 text-sm text-gray-500">{error}</p>
       </div>
     );
   }
 
-  if (!contributions) return null;
-
+  // Create a safe array for rendering
   const weekArr = [];
   
-  for (const week of contributions.weeks) {
-    weekArr.push(week.contributionDays);
+  try {
+    if (contributions.weeks && Array.isArray(contributions.weeks)) {
+      for (const week of contributions.weeks) {
+        if (week && Array.isArray(week.contributionDays)) {
+          weekArr.push(week.contributionDays);
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error processing contributions data:', err);
+  }
+
+  // If weekArr is empty after processing, show an error
+  if (weekArr.length === 0) {
+    return (
+      <div className="text-red-500 text-center p-8">
+        <p>No contribution data available.</p>
+      </div>
+    );
   }
 
   return (
@@ -120,7 +142,7 @@ export default function GitHubHeatmap() {
           
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
             <span className={`text-lg md:text-xl font-bold ${darkMode ? 'text-purple-400' : 'text-purple-600'} animate-pulse`}>
-              {contributions.totalContributions.toLocaleString()} contributions in the last year
+              {contributions.totalContributions?.toLocaleString() || 0} contributions in the last year
             </span>
             <a
               href={`https://github.com/${GITHUB_USERNAME}`}
