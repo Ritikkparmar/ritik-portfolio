@@ -102,7 +102,7 @@ export default function GitHubHeatmap() {
       <p className={`mt-6 text-lg lg:text-2xl px-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}
       >
         <span className="font-semibold text-purple-500">Open Source Journey:</span> <br className="hidden md:block" />
-        Here's a creative snapshot of my coding streaks, contributions, and open source passion over the past year.
+        Here&apos;s a creative snapshot of my coding streaks, contributions, and open source passion over the past year.
       </p>
       <div
         className={`mt-10 p-6 rounded-2xl shadow-xl transition-all duration-300 ${darkMode ? 'bg-gray-900 border border-gray-800' : 'bg-white border border-gray-200'}`}
