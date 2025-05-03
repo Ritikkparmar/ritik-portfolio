@@ -5,9 +5,17 @@ import { useTheme } from "@/context/ThemeContext";
 import { FaGithub } from "react-icons/fa";
 
 interface ContributionDay {
+  contributionCount: number;
   date: string;
-  count: number;
-  level: number;
+}
+
+interface Week {
+  contributionDays: ContributionDay[];
+}
+
+interface ContributionsData {
+  weeks: Week[];
+  totalContributions: number;
 }
 
 const GITHUB_USERNAME = "Ritikkparmar";
@@ -21,35 +29,54 @@ function getColor(level: number, darkMode: boolean) {
 
 export default function GitHubHeatmap() {
   const { darkMode } = useTheme();
-  const [weeks, setWeeks] = useState<ContributionDay[][]>([]);
+  const [contributions, setContributions] = useState<ContributionsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [total, setTotal] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchContributions() {
-      // Use GitHub's unofficial contributions API (via GitHub profile SVG)
-      const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}`);
-      const data = await res.json();
-      // data.contributions is a flat array of days for the last year
-      // Group by week (7 days)
-      const days: ContributionDay[] = data.contributions;
-      let weekArr: ContributionDay[][] = [];
-      let week: ContributionDay[] = [];
-      let totalContrib = 0;
-      days.forEach((day, i) => {
-        week.push(day);
-        totalContrib += day.count;
-        if (week.length === 7) {
-          weekArr.push(week);
-          week = [];
+    const fetchContributions = async () => {
+      try {
+        const response = await fetch('https://github-contributions-api.jogruber.de/v4/Ritikkparmar');
+        if (!response.ok) {
+          throw new Error('Failed to fetch contributions');
         }
-      });
-      setWeeks(weekArr);
-      setTotal(totalContrib);
-      setLoading(false);
-    }
+        const data = await response.json();
+        setContributions(data);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to load GitHub contributions');
+        setLoading(false);
+      }
+    };
+
     fetchContributions();
   }, []);
+
+  const getContributionColor = (count: number): string => {
+    if (count === 0) return darkMode ? 'bg-gray-800' : 'bg-gray-100';
+    if (count <= 3) return 'bg-green-200 dark:bg-green-900';
+    if (count <= 6) return 'bg-green-300 dark:bg-green-700';
+    if (count <= 9) return 'bg-green-400 dark:bg-green-600';
+    return 'bg-green-500 dark:bg-green-500';
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-48">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500 text-center">
+        Could not load GitHub contributions. Please try again later.
+      </div>
+    );
+  }
+
+  if (!contributions) return null;
 
   return (
     <section className="w-full max-w-4xl mx-auto pb-0 mb-0">
@@ -75,47 +102,42 @@ export default function GitHubHeatmap() {
         className={`mt-10 p-6 rounded-2xl shadow-xl transition-all duration-300 ${darkMode ? 'bg-gray-900 border border-gray-800' : 'bg-white border border-gray-200'}`}
         style={{ boxShadow: darkMode ? '0 4px 32px 0 #2d1a4a33' : '0 4px 32px 0 #a78bfa33' }}
       >
-        {loading ? (
-          <div className="text-center text-gray-500 dark:text-gray-300 animate-pulse">Loading contributions…</div>
-        ) : (
-          <div className="flex flex-col items-start">
-            <div className="w-full overflow-x-auto hide-scrollbar">
-              <div className="flex gap-1 min-w-max mx-auto">
-                {weeks.map((week, wi) => (
-                  <div key={wi} className="flex flex-col gap-1">
-                    {week.map((day, di) => (
-                      <div
-                        key={di}
-                        title={`${day.count} contributions on ${day.date}`}
-                        className="w-3 h-3 sm:w-4 sm:h-4 rounded transition-all duration-300 border border-transparent hover:border-purple-400"
-                        style={{ background: getColor(day.level, darkMode), opacity: 0, animation: `fadeIn 0.5s ${0.01 * (wi * 7 + di)}s forwards` }}
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
-              <span className={`text-lg md:text-xl font-bold ${darkMode ? 'text-purple-400' : 'text-purple-600'} animate-pulse`}>
-                {total.toLocaleString()} contributions in the last year
-              </span>
-              <a
-                href={`https://github.com/${GITHUB_USERNAME}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center gap-2 px-5 py-2 rounded-lg shadow transition-all duration-300 ${
-                  darkMode 
-                    ? 'bg-gradient-to-r from-purple-700 to-blue-600 text-white hover:from-purple-600 hover:to-blue-500' 
-                    : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600'
-                }`}
-              >
-                <FaGithub />
-                <span>Check out my GitHub</span>
-              </a>
+        <div className="flex flex-col items-start">
+          <div className="w-full overflow-x-auto hide-scrollbar">
+            <div className="grid grid-cols-53 gap-1">
+              {contributions.weeks.map((week, weekIndex) => (
+                <div key={weekIndex} className="grid grid-rows-7 gap-1">
+                  {week.contributionDays.map((day, dayIndex) => (
+                    <div
+                      key={`${weekIndex}-${dayIndex}`}
+                      className={`w-3 h-3 rounded-sm ${getContributionColor(day.contributionCount)}`}
+                      title={`${day.date}: ${day.contributionCount} contributions`}
+                    />
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
-        )}
+          
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
+            <span className={`text-lg md:text-xl font-bold ${darkMode ? 'text-purple-400' : 'text-purple-600'} animate-pulse`}>
+              {contributions.totalContributions.toLocaleString()} contributions in the last year
+            </span>
+            <a
+              href={`https://github.com/${GITHUB_USERNAME}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex items-center gap-2 px-5 py-2 rounded-lg shadow transition-all duration-300 ${
+                darkMode 
+                  ? 'bg-gradient-to-r from-purple-700 to-blue-600 text-white hover:from-purple-600 hover:to-blue-500' 
+                  : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600'
+              }`}
+            >
+              <FaGithub />
+              <span>Check out my GitHub</span>
+            </a>
+          </div>
+        </div>
       </div>
       <style>{`
         @keyframes fadeIn {

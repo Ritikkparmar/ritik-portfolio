@@ -1,6 +1,6 @@
 "use client";
 
-import { projectData } from "@/data/projectData";
+import { projects, Project } from "@/data/projectData";
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
@@ -59,7 +59,7 @@ const MyProjects = () => {
       </motion.h2>
 
       <div className="space-y-32">
-        {projectData.map((item, index) => (
+        {projects.map((project: Project, index: number) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 60 }}
@@ -76,8 +76,8 @@ const MyProjects = () => {
               }`}
             >
               <Image
-                src={item.image}
-                alt={item.title}
+                src={project.image}
+                alt={project.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-contain rounded-xl group-hover:scale-105 transition-transform duration-500"
@@ -99,15 +99,15 @@ const MyProjects = () => {
               className="w-full lg:w-1/2 text-center lg:text-left"
             >
               <h3 className={`text-3xl md:text-4xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
-                {item.title}
+                {project.title}
                 <span className="text-purple-600">.</span>
               </h3>
               <p className={`mt-4 text-lg md:text-xl leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                {item.description}
+                {project.description}
               </p>
               
               <div className="mt-6 flex flex-wrap gap-2 justify-center lg:justify-start">
-                {item.techStack.map((tech, techIndex) => (
+                {project.tech.map((tech: string, techIndex: number) => (
                   <motion.div
                     key={techIndex}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -125,40 +125,40 @@ const MyProjects = () => {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
-                <motion.a
-                  href={item.githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                    darkMode 
-                      ? 'bg-gray-800 text-white hover:bg-gray-700' 
-                      : 'bg-gray-800 text-white hover:bg-gray-700'
-                  }`}
-                >
-                  <FaGithub />
-                  <span>GitHub</span>
-                </motion.a>
-                <motion.a
-                  href={item.liveLink === "coming-soon" ? "#" : item.liveLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                    item.liveLink === "coming-soon"
-                      ? darkMode 
-                        ? "bg-gray-700 text-gray-400 cursor-not-allowed" 
-                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : darkMode 
+                {project.github && (
+                  <motion.a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                      darkMode 
+                        ? 'bg-gray-800 text-white hover:bg-gray-700' 
+                        : 'bg-gray-800 text-white hover:bg-gray-700'
+                    }`}
+                  >
+                    <FaGithub />
+                    <span>GitHub</span>
+                  </motion.a>
+                )}
+                {project.demo && (
+                  <motion.a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                      darkMode 
                         ? "bg-purple-700 text-white hover:bg-purple-600" 
                         : "bg-purple-600 text-white hover:bg-purple-700"
-                  }`}
-                >
-                  <FaExternalLinkAlt />
-                  <span>{item.liveLink === "coming-soon" ? "Coming Soon" : "Live Preview"}</span>
-                </motion.a>
+                    }`}
+                  >
+                    <FaExternalLinkAlt />
+                    <span>Live Preview</span>
+                  </motion.a>
+                )}
               </div>
             </motion.div>
           </motion.div>

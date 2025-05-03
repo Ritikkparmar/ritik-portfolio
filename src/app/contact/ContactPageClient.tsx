@@ -1,5 +1,5 @@
 'use client';
-import { Contact, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import profileImg from "../../../public/profile.jpg";
 import Image from "next/image";
 import Link from "next/link";

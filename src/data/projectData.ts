@@ -1,55 +1,62 @@
-import sensAI from "../../public/assets/projects/Aiapp.png";
-import portviewAI from "../../public/assets/projects/portview.png";
-import jobhive from "../../public/assets/projects/job.png";
-import bloodDonate from "../../public/assets/projects/blood.png";
-import trimmr from "../../public/assets/projects/url.png";
-import devThreads from "../../public/assets/projects/portview.png";
+import { StaticImageData } from 'next/image';
+import sensAI from '../../public/assets/projects/sensai.png';
+import portviewAI from '../../public/assets/projects/portviewai.png';
+import jobhive from '../../public/assets/projects/jobhive.png';
+import bloodDonate from '../../public/assets/projects/blooddonate.png';
+import trimmr from '../../public/assets/projects/trimmr.png';
+import devThreads from '../../public/assets/projects/devthreads.png';
 
-export const projectData = [
+export interface Project {
+  title: string;
+  description: string;
+  image: StaticImageData;
+  tech: string[];
+  github?: string;
+  demo?: string;
+}
+
+export const projects: Project[] = [
   {
-    image: "/assets/projects/Aiapp.png",
-    title: "Sens AI",
-    description:
-      "An AI-powered career coach that helps users find the best path with resume insights, job suggestions, and personalized growth plans.",
-    githubLink: "https://github.com/yourusername/sens-ai",
-    liveLink: "https://sensaicareercoach.vercel.app/",
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "OpenAI API"],
+    title: 'SensAI',
+    description: 'AI-powered sentiment analysis tool for social media and customer feedback.',
+    image: sensAI,
+    tech: ['React', 'Python', 'TensorFlow', 'FastAPI'],
+    github: 'https://github.com/yourusername/sensai',
+    demo: 'https://sensai-demo.vercel.app'
   },
   {
-    image: "/assets/projects/portview.png",
-    title: "Portview AI",
-    description:
-      "Generate stunning portfolios from simple prompts, complete with integrated interview bots and smart layout suggestions.",
-    githubLink: "https://github.com/yourusername/portview-ai",
-    liveLink: "coming-soon",
-    techStack: ["React", "Node.js", "MongoDB", "Express"],
+    title: 'PortviewAI',
+    description: 'Portfolio analysis and optimization platform using AI.',
+    image: portviewAI,
+    tech: ['Next.js', 'TypeScript', 'TailwindCSS', 'Python'],
+    github: 'https://github.com/yourusername/portviewai'
   },
   {
-    image: "/assets/projects/job.png",
-    title: "JobHive",
-    description:
-      "A sleek job portal where users can post, edit, and manage job listings with modern CRUD operations and applicant tracking.",
-    githubLink: "https://github.com/yourusername/jobhive",
-    liveLink: "coming-soon",
-    techStack: ["MERN Stack", "Redux", "Material UI"],
+    title: 'JobHive',
+    description: 'Job application tracking and management system.',
+    image: jobhive,
+    tech: ['React', 'Node.js', 'Express', 'MongoDB'],
+    demo: 'https://jobhive.vercel.app'
   },
   {
-    image: "/assets/projects/blood.png",
-    title: "Blood Donate App",
-    description:
-      "A lifesaving platform connecting donors and recipients through geolocation, urgency filters, and real-time availability.",
-    githubLink: "https://github.com/yourusername/blood-donate",
-    liveLink: "coming-soon",
-    techStack: ["React Native", "Firebase", "Google Maps API"],
+    title: 'Blood Donation Network',
+    description: 'Platform connecting blood donors with those in need.',
+    image: bloodDonate,
+    tech: ['React Native', 'Firebase', 'Node.js'],
+    github: 'https://github.com/yourusername/blood-donation'
   },
   {
-    image: "/assets/projects/url.png",
-    title: "Trimmr",
-    description:
-      "Minimalist and fast URL shortener with analytics, QR code generation, and custom aliases for effective link management.",
-    githubLink: "https://github.com/yourusername/trimmr",
-    liveLink: "https://trimmr-81tn.vercel.app/",
-    techStack: ["Node.js", "Express", "MongoDB", "Redis"],
+    title: 'Trimmr',
+    description: 'URL shortening service with analytics.',
+    image: trimmr,
+    tech: ['Next.js', 'PostgreSQL', 'Prisma'],
+    demo: 'https://trimmr.vercel.app'
   },
-  
+  {
+    title: 'DevThreads',
+    description: 'Developer community platform for sharing knowledge.',
+    image: devThreads,
+    tech: ['Vue.js', 'Node.js', 'MongoDB'],
+    github: 'https://github.com/yourusername/devthreads'
+  }
 ];
