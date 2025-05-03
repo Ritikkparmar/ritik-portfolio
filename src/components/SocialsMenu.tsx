@@ -1,7 +1,6 @@
 "use client";
 
 import { Github, Linkedin, Instagram } from "lucide-react";
-import Link from "next/link";
 import { useTheme } from "@/context/ThemeContext";
 
 const SocialsMenu = () => {
