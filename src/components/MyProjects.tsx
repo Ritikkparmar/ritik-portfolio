@@ -6,12 +6,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiReact, SiNodedotjs, SiMongodb, SiExpress, SiRedux, SiFirebase, SiGooglemaps, SiRedis, SiPrisma, SiPostgresql, SiMaterialdesign } from "react-icons/si";
+import { useTheme } from "@/context/ThemeContext";
 
 const MyProjects = () => {
+  const { darkMode } = useTheme();
+
   const getTechIcon = (tech: string) => {
     switch (tech.toLowerCase()) {
       case "next.js":
-        return <SiNextdotjs className="text-gray-800" />;
+        return <SiNextdotjs className={darkMode ? "text-gray-300" : "text-gray-800"} />;
       case "typescript":
         return <SiTypescript className="text-blue-600" />;
       case "tailwind css":
@@ -23,7 +26,7 @@ const MyProjects = () => {
       case "mongodb":
         return <SiMongodb className="text-green-500" />;
       case "express":
-        return <SiExpress className="text-gray-800" />;
+        return <SiExpress className={darkMode ? "text-gray-300" : "text-gray-800"} />;
       case "redux":
         return <SiRedux className="text-purple-600" />;
       case "material ui":
@@ -44,13 +47,13 @@ const MyProjects = () => {
   };
 
   return (
-    <section className="pb-32 px-4 md:px-10 lg:px-20 bg-gradient-to-br from-gray-50 via-purple-50 to-white">
+    <section className={`pb-32 px-4 md:px-10 lg:px-20 ${darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-gray-50 via-purple-50 to-white'}`}>
       <motion.h2 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-16"
+        className={`text-4xl md:text-5xl font-bold text-center mb-16 ${darkMode ? 'text-white' : 'text-gray-800'}`}
       >
         Featured <span className="text-purple-600">Projects</span>
       </motion.h2>
@@ -68,7 +71,9 @@ const MyProjects = () => {
             <motion.div 
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
-              className="w-full lg:w-1/2 h-[300px] sm:h-[400px] relative rounded-xl overflow-hidden shadow-xl group"
+              className={`w-full lg:w-1/2 h-[300px] sm:h-[400px] relative rounded-xl overflow-hidden shadow-xl group ${
+                darkMode ? 'bg-gray-800' : 'bg-white'
+              }`}
             >
               <Image
                 src={item.image}
@@ -79,25 +84,25 @@ const MyProjects = () => {
                 priority={index === 0}
                 style={{
                   objectFit: "contain",
-                  backgroundColor: "#f8f9fa",
+                  backgroundColor: darkMode ? "#1f2937" : "#f8f9fa",
                   padding: "1rem"
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
               className="w-full lg:w-1/2 text-center lg:text-left"
             >
-              <h3 className="text-3xl md:text-4xl font-bold text-gray-800">
+              <h3 className={`text-3xl md:text-4xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
                 {item.title}
                 <span className="text-purple-600">.</span>
               </h3>
-              <p className="mt-4 text-lg md:text-xl text-gray-600 leading-relaxed">
+              <p className={`mt-4 text-lg md:text-xl leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                 {item.description}
               </p>
               
@@ -109,7 +114,9 @@ const MyProjects = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.3 + techIndex * 0.1 }}
                     viewport={{ once: true }}
-                    className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                    className={`p-2 rounded-lg shadow-sm hover:shadow-md transition-shadow ${
+                      darkMode ? 'bg-gray-800' : 'bg-white'
+                    }`}
                     title={tech}
                   >
                     {getTechIcon(tech)}
@@ -117,14 +124,18 @@ const MyProjects = () => {
                 ))}
               </div>
 
-              <div className="mt-8 flex gap-4 justify-center lg:justify-start">
+              <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
                 <motion.a
                   href={item.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                    darkMode 
+                      ? 'bg-gray-800 text-white hover:bg-gray-700' 
+                      : 'bg-gray-800 text-white hover:bg-gray-700'
+                  }`}
                 >
                   <FaGithub />
                   <span>GitHub</span>
@@ -137,8 +148,12 @@ const MyProjects = () => {
                   whileTap={{ scale: 0.95 }}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                     item.liveLink === "coming-soon"
-                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-purple-600 text-white hover:bg-purple-700"
+                      ? darkMode 
+                        ? "bg-gray-700 text-gray-400 cursor-not-allowed" 
+                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : darkMode 
+                        ? "bg-purple-700 text-white hover:bg-purple-600" 
+                        : "bg-purple-600 text-white hover:bg-purple-700"
                   }`}
                 >
                   <FaExternalLinkAlt />

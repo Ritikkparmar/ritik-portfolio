@@ -52,7 +52,7 @@ export default function GitHubHeatmap() {
   }, []);
 
   return (
-    <section className="w-full max-w-3xl mx-auto pb-0 mb-0">
+    <section className="w-full max-w-4xl mx-auto pb-0 mb-0">
       <h1
         className="text-5xl lg:text-6xl font-bold text-left mb-2"
         style={{
@@ -79,29 +79,36 @@ export default function GitHubHeatmap() {
           <div className="text-center text-gray-500 dark:text-gray-300 animate-pulse">Loading contributions…</div>
         ) : (
           <div className="flex flex-col items-start">
-            <div className="flex gap-1 flex-nowrap overflow-x-auto hide-scrollbar w-full" style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-              {weeks.map((week, wi) => (
-                <div key={wi} className="flex flex-col gap-1">
-                  {week.map((day, di) => (
-                    <div
-                      key={di}
-                      title={`${day.count} contributions on ${day.date}`}
-                      className="w-4 h-4 rounded transition-all duration-300 border border-transparent hover:border-purple-400"
-                      style={{ background: getColor(day.level, darkMode), opacity: 0, animation: `fadeIn 0.5s ${0.01 * (wi * 7 + di)}s forwards` }}
-                    />
-                  ))}
-                </div>
-              ))}
+            <div className="w-full overflow-x-auto hide-scrollbar">
+              <div className="flex gap-1 min-w-max mx-auto">
+                {weeks.map((week, wi) => (
+                  <div key={wi} className="flex flex-col gap-1">
+                    {week.map((day, di) => (
+                      <div
+                        key={di}
+                        title={`${day.count} contributions on ${day.date}`}
+                        className="w-3 h-3 sm:w-4 sm:h-4 rounded transition-all duration-300 border border-transparent hover:border-purple-400"
+                        style={{ background: getColor(day.level, darkMode), opacity: 0, animation: `fadeIn 0.5s ${0.01 * (wi * 7 + di)}s forwards` }}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="mt-8 w-full flex flex-col items-center gap-4">
-              <span className="text-lg md:text-xl font-bold text-purple-600 animate-pulse">
+            
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
+              <span className={`text-lg md:text-xl font-bold ${darkMode ? 'text-purple-400' : 'text-purple-600'} animate-pulse`}>
                 {total.toLocaleString()} contributions in the last year
               </span>
               <a
                 href={`https://github.com/${GITHUB_USERNAME}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-lg shadow hover:scale-105 hover:from-purple-700 hover:to-blue-600 transition-all duration-300"
+                className={`flex items-center gap-2 px-5 py-2 rounded-lg shadow transition-all duration-300 ${
+                  darkMode 
+                    ? 'bg-gradient-to-r from-purple-700 to-blue-600 text-white hover:from-purple-600 hover:to-blue-500' 
+                    : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600'
+                }`}
               >
                 <FaGithub />
                 <span>Check out my GitHub</span>

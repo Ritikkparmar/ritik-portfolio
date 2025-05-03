@@ -12,7 +12,7 @@ export const projectData = [
     description:
       "An AI-powered career coach that helps users find the best path with resume insights, job suggestions, and personalized growth plans.",
     githubLink: "https://github.com/yourusername/sens-ai",
-    liveLink: "https://sens-ai.com",
+    liveLink: "https://sensaicareercoach.vercel.app/",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "OpenAI API"],
   },
   {
@@ -48,16 +48,8 @@ export const projectData = [
     description:
       "Minimalist and fast URL shortener with analytics, QR code generation, and custom aliases for effective link management.",
     githubLink: "https://github.com/yourusername/trimmr",
-    liveLink: "coming-soon",
+    liveLink: "https://trimmr-81tn.vercel.app/",
     techStack: ["Node.js", "Express", "MongoDB", "Redis"],
   },
-  {
-    image: "/assets/projects/portview.png",
-    title: "DevThreads",
-    description:
-      "A modern blogging app for developers—share knowledge, discuss trends, and build a following in the dev community.",
-    githubLink: "https://github.com/yourusername/devthreads",
-    liveLink: "coming-soon",
-    techStack: ["Next.js", "Prisma", "PostgreSQL", "Tailwind CSS"],
-  },
+  
 ];

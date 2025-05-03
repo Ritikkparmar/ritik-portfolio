@@ -36,7 +36,7 @@ const HomeWrapper = ({ profileImg }: HomeWrapperProps) => {
             </p>
 
             {/* Button Section - Centered on Small/Mid Screens */}
-            <div className="mt-6 flex flex-col md:flex-row items-center lg:items-start justify-center lg:justify-start space-y-4 md:space-y-0 md:space-x-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mt-8">
               <Link
                 href="/contact"
                 className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-bold"
@@ -44,9 +44,8 @@ const HomeWrapper = ({ profileImg }: HomeWrapperProps) => {
                 Get In Touch
               </Link>
               <a
-                href="https://mayurnakum-portfolio.vercel.app/mayurResume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/resume.pdf"
+                download="Ritik_Parmar_Resume.pdf"
                 className={`px-6 py-2 bg-transparent transition-all duration-300 border rounded-lg flex gap-2 font-bold ${
                   darkMode 
                     ? 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white' 

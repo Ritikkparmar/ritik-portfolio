@@ -47,50 +47,51 @@ const offerings = [
 
 const FreelancePage = () => {
   const { darkMode } = useTheme();
-  
-  return (
-    <main className={`min-h-screen w-full px-4 md:px-8 lg:px-28 transition-colors duration-300 ${darkMode ? 'bg-gray-900' : 'bg-white'}`}>
-      <motion.h1
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className={`text-4xl md:text-6xl font-bold text-center mb-12 ${darkMode ? 'text-white' : 'text-gray-800'}`}
-      >
-        Let's Build Something <span className="text-purple-500">Together</span>
-      </motion.h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {offerings.map((offer, index) => (
+  return (
+    <main className={`flex-none h-auto px-4 md:px-8 lg:px-28 relative w-full m-auto ${darkMode ? 'bg-gray-900' : 'bg-white'}`}>
+      <section className="py-20">
+        <h1 className={`text-4xl lg:text-8xl md:text-6xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+          Freelance<span className="text-purple-600">Services</span>
+        </h1>
+        <p className={`mt-8 text-xl lg:text-2xl px-2 border-l-4 lg:border-l-8 border-purple-600 ${darkMode ? 'text-gray-300' : 'text-gray-800'}`}>
+          Transforming Ideas into Reality with Custom Web Solutions
+        </p>
+      </section>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
+        {offerings.map((item, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className={`rounded-2xl overflow-hidden hover:scale-[1.02] transition-transform shadow-xl ${darkMode ? 'bg-gray-800 shadow-gray-800/50' : 'bg-white shadow-gray-200/70'}`}
+            className={`rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ${
+              darkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
+            }`}
           >
-            <div className={`relative w-full aspect-[5/3] ${darkMode ? 'bg-gray-700' : 'bg-white'}`}>
+            <div className="relative h-48">
               <Image
-                src={offer.image}
-                alt={offer.title}
+                src={item.image}
+                alt={item.title}
                 fill
-                className="object-contain p-4"
-                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover"
               />
             </div>
             <div className="p-6">
-              <h2 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
-                {offer.title}
-              </h2>
-              <p className={`mt-3 text-[17px] ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                {offer.description}
+              <h3 className={`text-2xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                {item.title}
+              </h3>
+              <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                {item.description}
               </p>
             </div>
           </motion.div>
         ))}
       </div>
 
-      <div className="text-center mt-16">
+      <div className="text-center pb-20">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

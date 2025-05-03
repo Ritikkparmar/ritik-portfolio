@@ -19,8 +19,10 @@ const ProjectsWrapper = () => {
           Decade and Counting
         </p>
       </section>
-      <MyProjects />
-      <Skils />
+      <div className="pb-20">
+        <MyProjects />
+        <Skils />
+      </div>
     </main>
   );
 };

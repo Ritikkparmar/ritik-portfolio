@@ -21,11 +21,13 @@ const AboutWrapper = () => {
           that's why I give my all in every new challenge.
         </p>
       </section>
-      <Myplace />
-      <SpotifyPlayer/>
-      <MyStory />
-      <Experience />
-      <GitHubHeatmap />
+      <div className="pb-20">
+        <Myplace />
+        <SpotifyPlayer/>
+        <MyStory />
+        <Experience />
+        <GitHubHeatmap />
+      </div>
     </main>
   );
 };
