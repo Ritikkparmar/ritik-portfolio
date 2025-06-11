@@ -1,9 +1,10 @@
 import { StaticImageData } from 'next/image';
-import sensAI from '../../public/assets/projects/Aiapp.png';
+
 import portviewAI from '../../public/assets/projects/portview.png';
 import jobhive from '../../public/assets/projects/job.png';
 import trimmr from '../../public/assets/projects/url.png';
 import welfixx from '../../public/assets/projects/welfixx.png';
+import mentoroAI from '../../public/assets/projects/mentoroAI.png';
 
 export interface Project {
   title: string;
@@ -18,7 +19,7 @@ export const projects: Project[] = [
   {
     title: 'MentoroAI',
     description: 'AI-powered sentiment analysis tool for social media and customer feedback.',
-    image: sensAI,
+    image: mentoroAI,
     tech: ['React', 'Python', 'TensorFlow', 'FastAPI'],
     github: 'https://github.com/Ritikkparmar/sensai',
     demo: 'https://mentoro-six.vercel.app/'
