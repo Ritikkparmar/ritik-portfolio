@@ -35,7 +35,7 @@ const offerings = [
     title: "SaaS Product Dashboards",
     description:
       "Craft powerful dashboards with analytics, charts, subscriptions, and admin features.",
-    image: "/assets/offerings/saas.png",
+    image: "/assets/offerings/portview.png",
   },
   {
     title: "Booking & Appointment Apps",

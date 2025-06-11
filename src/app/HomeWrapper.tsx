@@ -45,16 +45,16 @@ const HomeWrapper = ({ profileImg }: HomeWrapperProps) => {
                 Get In Touch
               </Link>
               <a
-                href="/resume.pdf"
+                href="/asd Resume__Resume.pdf"
                 download="Ritik_Parmar_Resume.pdf"
-                className={`px-6 py-2 bg-transparent transition-all duration-300 border rounded-lg flex gap-2 font-bold ${
+                className={`px-6 py-2 bg-transparent transition-all duration-300 border rounded-lg flex items-center justify-center gap-2 font-bold ${
                   darkMode 
                     ? 'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white' 
                     : 'border-gray-600 text-gray-800 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <Download className={darkMode ? 'text-gray-300' : 'text-gray-800'} /> 
-                Download CV
+                <span className="text-center">Download CV</span>
               </a>
             </div>
           </div>

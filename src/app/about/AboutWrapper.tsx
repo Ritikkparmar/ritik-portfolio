@@ -22,11 +22,11 @@ const AboutWrapper = () => {
         </p>
       </section>
       <div className="pb-20">
-        <Myplace />
-        <SpotifyPlayer/>
-        <MyStory />
-        <Experience />
-        <GitHubHeatmap />
+      <Myplace />
+      <SpotifyPlayer/>
+      <MyStory />
+      <Experience />
+      <GitHubHeatmap />
       </div>
     </main>
   );

@@ -73,7 +73,7 @@ export default function PDFViewer() {
             My Resume
           </h1>
           <a
-            href="/resume.pdf"
+            href="/asd Ritik__Resume.pdf"
             download="Ritik_Parmar_Resume.pdf"
             className="flex items-center justify-center gap-2 px-6 py-2.5 bg-gray-800 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors border border-gray-600 w-full sm:w-auto"
           >
@@ -85,7 +85,7 @@ export default function PDFViewer() {
 
       <div className="w-full max-w-4xl bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6">
         <Document
-          file={process.env.NODE_ENV === 'development' ? '/resume.pdf' : '/resume.pdf'}
+          file={process.env.NODE_ENV === 'development' ? '/asd Resume__Resume.pdf' : '/asd Resume__Resume.pdf'}
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={onDocumentLoadError}
           loading={
