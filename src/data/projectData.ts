@@ -2,7 +2,6 @@ import { StaticImageData } from 'next/image';
 import sensAI from '../../public/assets/projects/Aiapp.png';
 import portviewAI from '../../public/assets/projects/portview.png';
 import jobhive from '../../public/assets/projects/job.png';
-import bloodDonate from '../../public/assets/projects/blood.png';
 import trimmr from '../../public/assets/projects/url.png';
 import welfixx from '../../public/assets/projects/welfixx.png';
 
