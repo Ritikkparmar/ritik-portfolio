@@ -30,7 +30,7 @@ const Experience = () => {
             <span className="text-purple-600">@ Pixel Tech (Remote)</span>
           </h3>
           <p className={darkMode ? 'text-gray-400' : 'text-gray-600'}>
-            A 3-month impactful experience shaping real-world projects.
+            A 6-month impactful experience shaping real-world projects.
           </p>
 
           <ul className={`mt-4 space-y-3 lg:text-[20px] ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
